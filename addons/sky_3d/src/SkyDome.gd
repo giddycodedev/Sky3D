@@ -1,13 +1,13 @@
-# Copyright (c) 2023-2025 Cory Petkovsek and Contributors
-# Copyright (c) 2021 J. Cuellar
-
-## SkyDome is a component of [Sky3D].
-##
-## This class renders the sky shader, including the stars, clouds, sun and moon. See [Sky3D].
-
 @tool
 class_name SkyDome
 extends Node
+
+## Copyright (c) 2023-2025 Cory Petkovsek and Contributors
+## Copyright (c) 2021 J. Cuellar
+##
+## SkyDome is a component of [Sky3D].
+##
+## This class renders the sky shader, including the stars, clouds, sun and moon. See [Sky3D].
 
 signal day_night_changed(value)
 
@@ -252,8 +252,7 @@ func _update_sun_coords() -> void:
 
     # Position the sun on a unit sphere, orienting the light to the origin, mimicking a star orbiting a planet.
     _sun_transform.origin = TOD_Math.spherical_to_cartesian(sun_altitude, sun_azimuth)
-    # Transform with Vector3.UP to ensure Z-rotation is 0, otherwise shadows will flicker more
-    _sun_transform = _sun_transform.looking_at(Vector3.ZERO, Vector3.UP)
+    _sun_transform = _sun_transform.looking_at(Vector3.ZERO, Vector3.LEFT)
 
     fog_material.set_shader_parameter("sun_direction", _sun_transform.origin)
     if _sun_light_node:
@@ -312,8 +311,6 @@ func _update_sun_light_color() -> void:
         return
     var sun_light_altitude_mult: float = clampf(_sun_transform.origin.y * 2.0, 0., 1.)
     _sun_light_node.light_color = sun_horizon_light_color.lerp(sun_light_color, sun_light_altitude_mult)
-    if is_scene_built:
-        sky_material.set_shader_parameter("sun_light_color", _sun_light_node.light_color)
 
 
 func _update_sun_light_energy() -> void:
@@ -419,7 +416,6 @@ func update_moon_coords() -> void:
         _moon_light_node.visible = true
 
     _moon_transform.origin = TOD_Math.spherical_to_cartesian(moon_altitude, moon_azimuth)
-    # Transform with Vector3.Left which puts the slight gimbal lock on the horizon. Up puts it at the zenith.
     _moon_transform = _moon_transform.looking_at(Vector3.ZERO, Vector3.LEFT)
 
     var moon_basis: Basis = get_parent().moon.get_global_transform().basis.inverse()
@@ -789,15 +785,6 @@ func _update_beta_mie() -> void:
 @export_group("Clouds")
 
 
-## The night time color tint for the clouds.
-@export var clouds_night_color := Color(0.090196, 0.094118, 0.129412, 1.0) :
-    set(value):
-        clouds_night_color = value
-        if is_scene_built:
-            cumulus_material.set_shader_parameter("clouds_night_color", clouds_night_color)
-            sky_material.set_shader_parameter("clouds_night_color", clouds_night_color)
-
-
 #####################
 ## Wind
 #####################
@@ -895,18 +882,10 @@ func _check_cloud_processing() -> void:
 ## Toggles visibility of high-altitude cirrus clouds.
 @export var cirrus_visible: bool = false :
     set(value):
-        cirrus_visible = value
         if is_scene_built:
+            cirrus_visible = value
             sky_material.set_shader_parameter("cirrus_visible", value)
             _check_cloud_processing()
-
-## Adjusts the brightness of cirrus clouds. If covering the sky, this has a dramatic affect on lighting.
-@export_range(0.0, 16.0, 0.005) var cirrus_intensity: float = 2.0 :
-    set(value):
-        cirrus_intensity = value
-        if is_scene_built:
-            sky_material.set_shader_parameter("cirrus_intensity", cirrus_intensity)
-
 
 
 ## Set density for cirrus clouds.
@@ -939,6 +918,14 @@ func _check_cloud_processing() -> void:
         cirrus_sky_tint_fade = value
         if is_scene_built:
             sky_material.set_shader_parameter("cirrus_sky_tint_fade", cirrus_sky_tint_fade)
+
+
+## Adjusts the brightness of cirrus clouds. If covering the sky, this has a dramatic affect on lighting.
+@export var cirrus_intensity: float = 10.0 :
+    set(value):
+        cirrus_intensity = value
+        if is_scene_built:
+            sky_material.set_shader_parameter("cirrus_intensity", cirrus_intensity)
 
 
 ## The noise texture used for generating cirrus cloud patterns.
@@ -982,12 +969,31 @@ func _check_cloud_processing() -> void:
             _check_cloud_processing()
 
 
-## Adjusts the brightness of cumulus clouds. If covering the sky, this has a dramatic affect on lighting.
-@export_range(0, 16, 0.005) var cumulus_intensity: float = 0.6 :
+## The daytime color tint for the cumulus clouds.
+@export var cumulus_day_color := Color(0.823529, 0.87451, 1.0, 1.0) :
     set(value):
-        cumulus_intensity = value
+        cumulus_day_color = value
         if is_scene_built:
-            cumulus_material.set_shader_parameter("cumulus_intensity", cumulus_intensity)
+            cumulus_material.set_shader_parameter("cumulus_day_color", cumulus_day_color)
+            sky_material.set_shader_parameter("cumulus_day_color", cumulus_day_color)
+
+
+## The warm color tint for the cumulus clouds during sunrise and sunset.
+@export var cumulus_horizon_light_color := Color(.98, 0.43, 0.15, 1.0) :
+    set(value):
+        cumulus_horizon_light_color = value
+        if is_scene_built:
+            cumulus_material.set_shader_parameter("cumulus_horizon_light_color", cumulus_horizon_light_color)
+            sky_material.set_shader_parameter("cumulus_horizon_light_color", cumulus_horizon_light_color)
+
+
+## The nighttime color tint for the cumulus clouds.
+@export var cumulus_night_color := Color(0.090196, 0.094118, 0.129412, 1.0) :
+    set(value):
+        cumulus_night_color = value
+        if is_scene_built:
+            cumulus_material.set_shader_parameter("cumulus_night_color", cumulus_night_color)
+            sky_material.set_shader_parameter("cumulus_night_color", cumulus_night_color)
 
 
 ## Controls the vertical depth and layering thickness of the cumulus clouds.
@@ -1020,6 +1026,14 @@ func _check_cloud_processing() -> void:
         cumulus_noise_freq = value
         if is_scene_built:
             cumulus_material.set_shader_parameter("cumulus_noise_freq", cumulus_noise_freq)
+
+
+## Adjusts the brightness of cumulus clouds. If covering the sky, this has a dramatic affect on lighting.
+@export_range(0, 16, 0.005) var cumulus_intensity: float = 0.6 :
+    set(value):
+        cumulus_intensity = value
+        if is_scene_built:
+            cumulus_material.set_shader_parameter("cumulus_intensity", cumulus_intensity)
 
 
 ## Controls the strength of hazy light scattering around the cumulus clouds from the sun and moon, enhancing glow and diffusion near edges.
