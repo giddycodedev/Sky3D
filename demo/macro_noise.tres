@@ -1,0 +1,14 @@
+[gd_resource type="NoiseTexture3D" load_steps=2 format=3 uid="uid://bc65xxo2na6qk"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_0j4pb"]
+noise_type = 0
+frequency = 0.03
+fractal_octaves = 3
+
+[resource]
+width = 96
+height = 96
+depth = 96
+noise = SubResource("FastNoiseLite_0j4pb")
+seamless = true
+seamless_blend_skirt = 0.5
