@@ -1,15 +1,16 @@
-# Copyright (c) 2023-2025 Cory Petkovsek and Contributors
-# Copyright (c) 2021 J. Cuellar
+@tool
+class_name Sky3D
+extends WorldEnvironment
 
+## Copyright (c) 2023-2025 Cory Petkovsek and Contributors
+## Copyright (c) 2021 J. Cuellar
+##
 ## Sky3D is an Atmosphereic Day/Night Cycle for Godot 4.
 ##
 ## This plugin manages time, moving the sun, moon, and stars, and consolidates environmental lighting controls.
 ## To use it, remove any WorldEnvironment node from you scene, then add a new Sky3D node.
 ## Explore and configure the settings in the Sky3D, SunLight, MoonLight, [SkyDome], and [TimeOfDay] nodes.
 
-@tool
-class_name Sky3D
-extends WorldEnvironment
 
 ## Emitted when the environment has changed to a new resource.
 signal environment_changed
@@ -60,7 +61,7 @@ var sky_material: ShaderMaterial
 
 
 ## Enables both 2D and cumulus cloud layers.
-@export var clouds_enabled: bool = true :
+@export var clouds_enabled: bool = false :
     set(value):
         clouds_enabled = value
         if sky:

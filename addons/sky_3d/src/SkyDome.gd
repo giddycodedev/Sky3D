@@ -893,7 +893,7 @@ func _check_cloud_processing() -> void:
 
 
 ## Toggles visibility of high-altitude cirrus clouds.
-@export var cirrus_visible: bool = true :
+@export var cirrus_visible: bool = false :
     set(value):
         cirrus_visible = value
         if is_scene_built:
@@ -974,7 +974,7 @@ func _check_cloud_processing() -> void:
 
 
 ## Toggles visibility of the low-altitude cumulus clouds.
-@export var cumulus_visible: bool = true :
+@export var cumulus_visible: bool = false :
     set(value):
         cumulus_visible = value
         if is_scene_built:
