@@ -115,7 +115,7 @@ func toggle_fullscreen() -> void:
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_0j4pb"]
 noise_type = 3
-fractal_octaves = 3
+frequency = 0.0155
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_1g8sw"]
 noise = SubResource("FastNoiseLite_0j4pb")
@@ -168,7 +168,7 @@ shader_parameter/star_scintillation_speed = 0.01
 shader_parameter/noise_tex = ExtResource("7_d0ed4")
 shader_parameter/clouds_night_color = Color(0.090196, 0.094118, 0.129412, 1)
 shader_parameter/cirrus_visible = false
-shader_parameter/cirrus_intensity = 2.0
+shader_parameter/cirrus_intensity = 10.0
 shader_parameter/cirrus_coverage = 0.5
 shader_parameter/cirrus_thickness = 1.7
 shader_parameter/cirrus_absorption = 2.0
@@ -186,7 +186,7 @@ shader_parameter/cumulus_absorption = 2.0
 shader_parameter/cumulus_noise_freq = 2.7
 shader_parameter/cumulus_sky_tint_fade = 0.0
 shader_parameter/cumulus_size = 0.5
-shader_parameter/cumulus_position = Vector2(2.4686756, 9.067242e-06)
+shader_parameter/cumulus_position = Vector2(4.313156, 1.584088e-05)
 shader_parameter/cumulus_texture = ExtResource("4_1g8sw")
 shader_parameter/cumulus_partial_mie_phase = Vector3(0.957564, 1.042436, 0.412)
 shader_parameter/cumulus_mie_intensity = 1.0
@@ -199,7 +199,7 @@ shader_parameter/equatorial_grid_rotation_offset = 0.03
 shader_parameter/moon_matrix = Basis(-9.313226e-10, -0.33007544, 0.94395465, -0.01795684, -0.9438025, -0.33002222, 0.99983877, -0.016950438, -0.00592711)
 shader_parameter/nimbus_visible = true
 shader_parameter/nimbus_wind_speed = 0.0
-shader_parameter/nimbus_wind_direction = Vector3(0, 0, 0)
+shader_parameter/nimbus_wind_direction = Vector3(0.02, 0, 0.015)
 shader_parameter/nimbus_color = Vector3(1, 1, 1)
 shader_parameter/nimbus_texture = ExtResource("6_0j4pb")
 shader_parameter/nimbus_layer_altitude = 8000.0
@@ -210,25 +210,25 @@ shader_parameter/nimbus_steps = 16
 shader_parameter/nimbus_volume_steps = 16
 shader_parameter/nimbus_light_steps = 8
 shader_parameter/nimbus_scattering_octaves = 4
-shader_parameter/nimbus_absorption = 0.010000000475
+shader_parameter/nimbus_absorption = 0.01
 shader_parameter/nimbus_density_scale = 1.0
 shader_parameter/nimbus_light_intensity = 1.0
 shader_parameter/nimbus_beer_powder_strength = 0.5
 shader_parameter/nimbus_ms_attenuation = 0.1
 shader_parameter/nimbus_ms_contribution = 0.6
 shader_parameter/nimbus_ms_phase_attenuation = 0.1
-shader_parameter/nimbus_noise_scale = 0.0349999991145
-shader_parameter/nimbus_noise_coverage = 0.35
-shader_parameter/nimbus_noise_power = 2.0
+shader_parameter/nimbus_noise_scale = 0.03049999922835
+shader_parameter/nimbus_noise_coverage = 0.1999999955296
+shader_parameter/nimbus_noise_power = 6.999999854712
 shader_parameter/nimbus_zenith_scale = 0.3
 shader_parameter/nimbus_horizon_scale = 0.015
 shader_parameter/nimbus_horizon_start = 0.4
-shader_parameter/nimbus_horizon_end = 1.0
+shader_parameter/nimbus_horizon_end = 0.999999977648
 shader_parameter/nimbus_horizon_density_mul = 0.35
 shader_parameter/nimbus_horizon_light_mul = 0.75
 shader_parameter/nimbus_coverage_tex = SubResource("NoiseTexture2D_1g8sw")
-shader_parameter/nimbus_coverage_tex_scale = 3.40000005066408
-shader_parameter/nimbus_coverage_strength = 0.1
+shader_parameter/nimbus_coverage_tex_scale = 3.4
+shader_parameter/nimbus_coverage_strength = 0.0999999977648
 shader_parameter/nimbus_coverage_bias = -0.1
 shader_parameter/nimbus_coverage_horizon_boost = 0.2
 shader_parameter/nimbus_edge_breakup_strength = 0.35
@@ -283,7 +283,7 @@ wind_direction = 1.5708
 metadata/_custom_type_script = "uid://deo0gxkmk2ahd"
 
 [node name="SunLight" type="DirectionalLight3D" parent="Sky3D"]
-transform = Transform3D(0.94941556, -0.23715816, 0.20583045, 0, 0.655464, 0.75522655, -0.31402254, -0.71702385, 0.62230766, 0.20583044, 0.7552265, 0.6223076)
+transform = Transform3D(0, -0.9785877, 0.20583045, 0.6359242, 0.15884995, 0.75522655, -0.77175146, 0.13089257, 0.62230766, 0.20583044, 0.7552265, 0.6223076)
 shadow_enabled = true
 directional_shadow_blend_splits = true
 directional_shadow_max_distance = 600.0
