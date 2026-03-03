@@ -96,6 +96,7 @@ mesh = SubResource("2")
 [node name="Compass" parent="." instance=ExtResource("2_gjkdl")]
 
 [node name="Props" type="Node3D" parent="."]
+visible = false
 
 [node name="Sphere0" type="MeshInstance3D" parent="Props"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1, 4)
@@ -189,18 +190,24 @@ omni_range = 20.0
 
 [node name="Buildings" parent="." instance=ExtResource("1")]
 transform = Transform3D(-5.05739e-08, 0, 1, 0, 1.799, 0, -1.157, 0, -4.37114e-08, -318, 0, -598.815)
+visible = false
 
 [node name="Buildings2" parent="." instance=ExtResource("1")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -317.435, 0, 7.93411)
+visible = false
 
 [node name="Buildings3" parent="." instance=ExtResource("1")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -316.869, 0, 601.186)
+visible = false
 
 [node name="Buildings4" parent="." instance=ExtResource("1")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 342, 0, -599.437)
+visible = false
 
 [node name="Buildings5" parent="." instance=ExtResource("1")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 342.565, 0, 15.5)
+visible = false
 
 [node name="Buildings6" parent="." instance=ExtResource("1")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 266.673, 0, 603.016)
+visible = false
